@@ -1,0 +1,96 @@
+<html lang="en">
+
+<head>
+ <meta charset="utf-8"/>
+  <title>Allergy Attention</title>
+  <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+  <link rel="shortcut icon" href="/assets/img/peanutFavicon.png" />
+  <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
+
+  <!-- Bootstrap core CSS -->
+  <link href="assets/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- Bootstrap Template from https://getbootstrap.com/docs/4.0/components/alerts/ -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+</head>
+
+<body>
+<nav>
+<div class="topnav" id="myTopnav">
+  <a id="title">Allergy Attention</a>
+  <a href="/login">Home</a>
+  <a href="/account">Account</a>
+  <a href="/data" class="active">Data</a>
+  <a href="/logout">Logout</a>
+  <a href="javascript:void(0);" class="icon" onclick="openHamburgerMenu()">
+    <img class="hamburger" src="/assets/img/menu.png">
+  </a>
+</div>
+</nav>
+
+<!-- Page Content -->
+<content class="appPage">
+<!-- Sidebar Widgets Column -->
+    <div class="sidebar" style="display:none">
+      <!-- Categories Widget -->
+        <div class="sort">
+          <h3>Ingredient List:</h3>
+          <div class="pickSort">
+            {{#if displayFood}}
+            {{#each displayFood}}
+              <h2>{{this.level}}</h2>
+              <h4>{{this.ingredients}}</h4>
+            {{/each}}
+            {{/if}}
+        </div>
+    </div>
+  </div>  
+
+  <!-- Sidebar listing out data -->
+  <div class="main">
+    <br>
+    <h3>About:</h3>
+    <br>
+    <p>Tracking food allergies can be difficult. These charts were made
+      to display data in a way easy to understand. 
+      <br><br>
+      The Data chart tracks the reactions. The Food Breakdown chart tracks 
+      the ingredients you've listed. So comparing them you can see the 
+      majority of the reactions you have and the most common food you eat,
+      thus being able to put together an idea of foods you should avoid.
+      In doing so you can experiment with yourself and find what foods 
+      you should avoid.</p>
+    <br>
+    <div id="analysis">
+      <h3>Subscribe to see data</h3>
+      <a href="/account"><button class="formSubmit">Subscribe</button></a>
+    <!-- Blog Entries Column -->
+  </div>  
+</content>
+  <!-- /.container -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="/assets/appBundle.js"></script>
+
+    <script>
+    // hamburger menu functionality when screen is smaller
+    function openHamburgerMenu() {
+        let x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+        x.className += " responsive";
+        } else {
+        x.className = "topnav";
+        }
+    }
+    </script>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/assets/appBundle.js"></script>
+</body>
+</html>

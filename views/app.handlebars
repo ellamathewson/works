@@ -1,0 +1,183 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Allergy Attention</title>
+  <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+  <link rel="shortcut icon" href="/assets/img/peanutFavicon.png" />
+  <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
+
+  <!-- Bootstrap core CSS -->
+  <link href="assets/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- Bootstrap Template from https://getbootstrap.com/docs/4.0/components/alerts/ -->
+</head>
+
+<body>
+  <!-- Navigation -->
+<nav>
+<div class="topnav" id="myTopnav">
+  <a id="title">Allergy Attention</a>
+  <a href="/login" class="active">Home</a>
+  <a href="/account">Account</a>
+  <a href="/data">Data</a>
+  <a href="/logout">Logout</a>
+  <a href="javascript:void(0);" class="icon" onclick="openHamburgerMenu()">
+    <img class="hamburger" src="/assets/img/menu.png">
+  </a>
+</div>
+</nav>
+
+  <!-- Page Content -->
+<content class="appPage">
+
+<!-- Sidebar Widgets Column -->
+    <div class="sidebar">
+       <div class="addForm">
+       <h3>Add Food</h3>
+         <div id="addFood"></div>
+      </div>
+
+      <!-- Search Widget -->
+      <div class="search">
+        <h3>Search</h3>
+          <form class="searchBar" name="searchForm" method="GET">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search for...">
+            <button class="formSubmit" type="button" onclick="searchData()">Go</button>
+            </form>
+      </div>
+  </div>  
+
+    <div class="main">
+    <!-- Blog Entries Column -->
+    <div id="posts">
+      <h1>Allergy Attention</h1>
+      <!-- Blog Post -->
+      <div class="tag" onclick="removeSearch()">
+        <h5>Tag</h5>
+      </div>
+      
+      <section id="meals">
+      </section>
+  </div>
+</div>  
+
+  </content>
+  <!-- /.container -->
+
+  <div id="errorModal">
+    <div class="modal fade" id="searchEmpty" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="searchEmptyLabel">Error: No results for ${input} found</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="removeSearch()">Okay</button>
+        </div> 
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    /* Handlebars.registerHelper('json', function (content) {
+      return JSON.stringify(content); 
+    }); 
+    
+    if title.innerHTML == input {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+    
+    */
+
+    const searchData = () => {
+      // grabs searchbar input
+        let input = document.getElementById("searchInput").value;
+
+        input = input.toLowerCase();
+        input = input.trim();
+
+        //grabs tag element
+        let tag = document.querySelector(".tag");
+
+        // grabs all the cards on screen
+        let cardElements = document.querySelectorAll(".card");
+
+        let itemsDisplaying = false;
+
+        //for each card,
+        cardElements.forEach(card => {
+          //if title matches input, display and show tag
+          let title = card.querySelector("h2").innerHTML;
+          title = title.toLowerCase();
+
+          let ingred = card.querySelector("#ingred").innerHTML;
+          ingred = ingred.toLowerCase();
+          ingred = ingred.split(",");
+
+          ingred.forEach(item => {
+            item = item.trim();
+              if (title == input) {
+              itemsDisplaying = true;
+              card.style.display = "block";
+              tag.querySelector("h5").innerHTML = input;
+              tag.style.display = "block";
+            //if not, set the display to none
+            } else if (item == input) {
+                itemsDisplaying = true;
+                console.log(card);
+                card.style.display = "block";
+                tag.querySelector("h5").innerHTML = input;
+                tag.style.display = "block";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+
+        if (itemsDisplaying == false) {
+            console.log("nothing on screen");
+            $('#searchEmpty').modal('show');
+          }
+    } 
+
+    const removeSearch = () => {
+      $('#searchEmpty').modal('hide');
+      let tag = document.querySelector(".tag");
+
+      let cardElements = document.querySelectorAll(".card");
+
+        cardElements.forEach(card => {
+          card.style.display = "block";
+          tag.style.display = "none";
+        });
+    }
+
+    const showData = () => {
+      window.location.href="/data";
+    }
+  </script>
+
+    <script src="/assets/appBundle.js"></script>
+
+    <script>
+      function openHamburgerMenu() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8"/>
+  <title>Allergy Attention</title>
+  <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+  <link rel="shortcut icon" href="/assets/img/peanutFavicon.png" />
+  <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
+
+  <!-- Bootstrap core CSS -->
+  <link href="assets/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- Bootstrap Template from https://getbootstrap.com/docs/4.0/components/alerts/ -->
+</head>
+
+<body>
+  <!-- Navigation -->
+<nav>
+  <div class="topnav" id="myTopnav">
+    <a id="title">Allergy Attention</a>
+    <a href="/maker">Home</a>
+    <a href="/account" class="active">Account</a>
+    <a href="/data">Data</a>
+    <a href="/logout">Logout</a>
+    <a href="javascript:void(0);" class="icon" onclick="openHamburgerMenu()">
+      <img class="hamburger" src="/assets/img/menu.png">
+    </a>
+  </div>
+</nav>
+
+  <!-- Page Content -->
+<content class="accountPage">
+<h1>Settings</h1>
+  <div class="account">
+    {{#if userInfo}}
+    <h2>Username: {{userInfo.username}}</h2>
+    {{/if}}
+  </div>
+  <br><br>
+  <div id="changePassForm"></div>
+  <div class="account">
+    {{#if userInfo}}
+    <h2 id="subLabel">Subscribed: {{userInfo.subscribed}}</h2>
+    {{/if}}
+  </div>
+  
+  <div id="changeSubscribe"></div>
+  </content>
+    <!-- /.container -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/assets/appBundle.js"></script>
+
+    <script>
+      // hamburger menu functionality when screen is smaller
+      function openHamburgerMenu() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+    </script>
+</body>
+
+</html>

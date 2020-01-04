@@ -1,0 +1,253 @@
+<html lang="en">
+
+<head>
+ <meta charset="utf-8"/>
+  <title>Allergy Attention</title>
+  <script crossorigin src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script crossorigin src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+  <link rel="shortcut icon" href="/assets/img/peanutFavicon.png" />
+  <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
+
+  <!-- Bootstrap core CSS -->
+  <link href="assets/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- Bootstrap Template from https://getbootstrap.com/docs/4.0/components/alerts/ -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+</head>
+
+<body>
+<nav>
+<div class="topnav" id="myTopnav">
+  <a id="title">Allergy Attention</a>
+  <a href="/login">Home</a>
+  <a href="/account">Account</a>
+  <a href="/data" class="active">Data</a>
+  <a href="/logout">Logout</a>
+  <a href="javascript:void(0);" class="icon" onclick="openHamburgerMenu()">
+    <img class="hamburger" src="/assets/img/menu.png">
+  </a>
+</div>
+</nav>
+
+<!-- Page Content -->
+<content class="appPage">
+<!-- Sidebar Widgets Column -->
+    <div class="sidebar" style="display:none">
+      <!-- Categories Widget -->
+        <div class="sort">
+          <h3>Ingredient List:</h3>
+          <div class="pickSort">
+            {{#if displayFood}}
+            {{#each displayFood}}
+              <h2>{{this.level}}</h2>
+              <h4>{{this.ingredients}}</h4>
+            {{/each}}
+            {{/if}}
+        </div>
+    </div>
+  </div>  
+
+  <!-- Sidebar listing out data -->
+  <div class="main">
+    <br>
+    <h3>About:</h3>
+    <br>
+    <p>Tracking food allergies can be difficult. These charts were made
+      to display data in a way easy to understand. 
+      <br><br>
+      The Data chart tracks the reactions. The Food Breakdown chart tracks 
+      the ingredients you've listed. So comparing them you can see the 
+      majority of the reactions you have and the most common food you eat,
+      thus being able to put together an idea of foods you should avoid.
+      In doing so you can experiment with yourself and find what foods 
+      you should avoid.</p>
+    <br>
+    <div id="analysis">
+      <h3>Data:</h3>
+      <br><br>
+      <canvas id="myChart"></canvas>
+      <br><br>
+      <h3>Food Breakdown:</h3>
+      <canvas id="barChart"></canvas>
+      <br><br>
+    </div>
+    <div id="noData">
+      <h3>No data added yet</h3>
+    </div>
+    
+    <!-- Blog Entries Column -->
+  </div>  
+</content>
+  <!-- /.container -->
+
+  <script>
+    // sets up donut chart using chart.js
+    let ctx = document.getElementById('myChart').getContext('2d');
+
+    // grabs all names from list on side
+    const userData = document.querySelectorAll('h2');
+    
+    // category numbers set at 0
+    let noPain = 0;
+    let mildDis = 0;
+    let painful = 0;
+    let urgent = 0;
+    console.log(`userdata ${userData}`);
+
+    // adds 1 to each category when listed to display on chart
+    userData.forEach((item) => {
+      console.log(`item innerHTML ${item.innerHTML}`);
+        switch(item.innerHTML) {
+          case "Urgent Care":
+            urgent += 1;
+            break;
+          case "Painful":
+            painful += 1;
+            break;
+          case "Mild Discomfort":
+            mildDis += 1;
+            break;
+          case "No Pain": 
+            noPain += 1;
+            break;
+          default:
+            break;
+        }
+    });
+
+    // sets up array using data grabbed above
+    let allData = [urgent, painful, mildDis, noPain];
+
+    // sets up chart 
+    let myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+            label: 'Data',
+            data: allData,
+            backgroundColor: ["#cc3300", "#ff9966", "#ffcc00", "#99cc33"],
+            }],
+
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: [
+            'Urgent',
+            'Painful',
+            'Mild Discomfort',
+            'No Pain'
+            ]
+        },
+        options: {}
+    });
+
+    const foodData = document.querySelectorAll('h4');
+    const h4Array = [];
+    const foodArray = [];
+    const foodOccuranceArray = [];
+
+    /* https://stackoverflow.com/questions/37365512/count-the-number-of-times-a-same-value-appears-in-a-javascript-array */
+    const getOccurrence = (array, value) => {
+      let count = 0;
+      array.forEach((v) => (v === value && count++));
+      return count;
+    }
+
+    foodData.forEach((item) => {
+        h4Array.push(item.innerHTML.split(','));      
+    });
+
+    h4Array.forEach((food) => {
+        food.forEach((item) => {
+            console.log(`fooditem ${item}`);
+            item = item.trim();
+            foodArray.push(item);
+            foodOccuranceArray.push(getOccurrence(foodArray, item));
+        });
+    });
+
+    console.log(`foodarray ${foodArray}`);
+    console.log(`food occurance ${foodOccuranceArray}`);
+
+    let ctx2 = document.getElementById('barChart').getContext('2d');
+
+    var myBarChart = new Chart(ctx2, {
+      type: 'bar',
+      data: {
+       labels: foodArray,
+    datasets: [{
+      label: 'Number of times tracked',
+      data: foodOccuranceArray,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderWidth: 1
+    }]
+        },
+      options: {
+        scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true,
+                  stepSize: 1,
+              }
+          }]
+        }
+      }
+  });
+
+  if(userData.length == 0) {
+    document.querySelector('#analysis').style.display = "none";
+    document.querySelector('#noData').style.display = "block";
+  } else {
+    document.querySelector('#analysis').style.display = "block";
+    document.querySelector('#noData').style.display = "none";
+  }
+  </script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/assets/appBundle.js"></script>
+
+  <script>
+    // hamburger menu functionality when screen is smaller
+    function openHamburgerMenu() {
+      let x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  </script>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/assets/appBundle.js"></script>
+
+  <script>
+    // hamburger menu functionality when screen is smaller
+    function openHamburgerMenu() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  }
+  </script>
+</body>
+</html>

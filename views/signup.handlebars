@@ -1,0 +1,74 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Allergy Attention user signup form">
+  <meta name="author" content="Ella Mathewson">
+
+  <title>Allergy Attention</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link rel="shortcut icon" href="/assets/img/peanutFavicon.png" />
+  <link rel="stylesheet" type="text/css" href="/assets/main.css" />
+
+  <!-- Bootstrap core CSS -->
+  <link href="assets/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- Bootstrap Template from https://getbootstrap.com/docs/4.0/components/alerts/ -->
+</head>
+
+<body>
+  <!-- Navigation -->
+<nav>
+<div class="topnav" id="myTopnav">
+  <a id="title">Allergy Attention</a>
+  <a href="/login">Login</a>
+  <a href="/signup" class="active">Signup</a>
+  <a href="javascript:void(0);" class="icon" onclick="openHamburgerMenu()">
+    <img class="hamburger" src="/assets/img/menu.png">
+  </a>
+</div>
+</nav>
+
+  <!-- Page Content -->
+  <content>
+    <!-- Sidebar Widgets Column -->
+
+    <!-- Side Widget -->
+    <div class="entryForm">
+      <h3>Sign Up</h3>
+      <div >
+      <form id="signupForm" name="signupForm" action="/signup" method="POST" class="mainForm">
+        <input class="textBox" id="user" type="text" name="username" placeholder="Username"/>
+        <input class="textBox" id="pass" type="password" name="pass" placeholder="Password"/>
+        <input class="textBox" id="pass2" type="password" name="pass2" placeholder="Retype password"/>
+        <input type="hidden" name="_csrf" value={{csrfToken}} />
+        <input class="formSubmit" type="submit" value="Sign Up" />
+      </form>
+        <div class="alert alert-danger" role="alert" id="error"> Error: All fields are required </div>
+      </div>
+    </div>
+
+    <!-- Advertisement -->
+      <img class="epipenAd" src="/assets/img/secondAd.jpg">
+    </content>
+    <!-- /.container -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/assets/bundle.js"></script>
+
+    <script>
+      // hamburger menu functionality when screen is smaller
+      function openHamburgerMenu() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+    </script>
+</body>
+</html>
